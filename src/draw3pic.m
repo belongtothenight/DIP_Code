@@ -1,8 +1,6 @@
 function draw3pic
   % ====================================================================================
   % Since the picture is regulated by pixel size, it is unwise to just plot in XY plane.
-  % rectangle ("Position", [0.05, 0.05, 0.9, 0.9]);
-  % title ("rectangle() with corners curved");
   % ============Function=======
   function image = create_function(ol, il, ov, iv)
     % ol:  outer length
