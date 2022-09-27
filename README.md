@@ -10,6 +10,7 @@ Scripts in this repo needs to be executed with MATLAB. Adjustment is needed for 
 
 ## File Description
 
-| No. | Filename   | Description                                                                                |
-| :-: | ---------- | ------------------------------------------------------------------------------------------ |
-|  1  | draw3pic.m | Draw three identical square except for their gray-scale pixel value. Illustrates illution. |
+| No. | Filename         | Description                                                                                |
+| :-: | ---------------- | ------------------------------------------------------------------------------------------ |
+|  1  | draw3pic.m       | Draw three identical square except for their gray-scale pixel value. Illustrates illution. |
+|  2  | draw_mach_band.m | Draw Mach Bands.                                                                           |
