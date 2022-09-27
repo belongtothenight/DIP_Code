@@ -2,7 +2,7 @@
 
 ![Repo Size](https://img.shields.io/github/repo-size/belongtothenight/DIP_Code) ![Code Size](https://img.shields.io/github/languages/code-size/belongtothenight/DIP_Code) ![File Count](https://img.shields.io/github/directory-file-count/belongtothenight/DIP_Code/src) ![Commit Per Month](https://img.shields.io/github/commit-activity/m/belongtothenight/DIP_Code)
 
-This repo contains all the codes of Digital Image Processing class and have description on the wiki tab.
+This repo contains all the codes of Digital Image Processing class.
 
 ## Notice
 
