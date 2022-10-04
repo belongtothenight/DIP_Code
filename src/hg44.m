@@ -31,6 +31,10 @@ function hg44(imgp, fn, imgsp, showimg)
     % ======Main==============
     % load image
     img = imread(imgp);
+    try
+        % necessary if using Matlab
+        img = rgb2gray(img);
+    end
     img = double(img); % affect writing image
     t0 = clock();
 
