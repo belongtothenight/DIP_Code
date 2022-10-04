@@ -1,4 +1,4 @@
-function hg44(imgp, fn, imgsp, showimg)
+function draw_halftoning_img_44(imgp, fn, imgsp, showimg)
     % ========================
     % This function takes grayscale image as input, plot and export
     %    the halftoning image with 2x2 dither matrix.
