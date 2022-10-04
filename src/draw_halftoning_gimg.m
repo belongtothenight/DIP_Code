@@ -13,7 +13,7 @@ function draw_halftoning_gimg(imgp, fn, dm, imgsp, showimg)
     if nargin < 5
         imgp = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\luna_grayscale.jpg';
         fn = 'luna_grayscale_hg_.jpg';
-        dm = 5; % can cause error if the number is too big
+        dm = 2; % can cause error if the number is too big
         imgsp = strcat('D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\', fn);
         showimg = 1;
     end
