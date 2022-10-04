@@ -10,8 +10,11 @@ Scripts in this repo needs to be executed with MATLAB. Adjustment is needed for 
 
 ## File Description
 
-| No. | Filename                 | Description                                                                                |
-| :-: | ------------------------ | ------------------------------------------------------------------------------------------ |
-|  1  | draw3pic.m               | Draw three identical square except for their gray-scale pixel value. Illustrates illution. |
-|  2  | draw_mach_band.m         | Draw Mach Bands.                                                                           |
-|  3  | draw_halftoning_img_22.m | Draw halftoning image from grayscale image by 2x2 dither matrix.                           |
+| No. | Filename                                                                                                           | Description                                                                                |
+| :-: | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+|  1  | ![draw3pic.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw3pic.m)                               | Draw three identical square except for their gray-scale pixel value. Illustrates illution. |
+|  2  | ![draw_mach_band.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_mach_band.m)                   | Draw Mach Bands.                                                                           |
+|  3  | ![draw_halftoning_gimg_22.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_halftoning_gimg_22.m) | Draw halftoning image from grayscale image by 2x2 dither matrix.                           |
+|  4  | ![draw_halftoning_gimg_44.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_halftoning_gimg_44.m) | Draw halftoning image from grayscale image by 4x4 dither matrix.                           |
+|  5  | ![draw_halftoning_gimg.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_halftoning_gimg.m)       | Generalized halftoning grayscale image drawing function. (bug)                             |
+|  6  | ![draw_halftoning_cimg.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_halftoning_cimg.m)       | Generalized halftoning grayscale image drawing function. (bug)                             |

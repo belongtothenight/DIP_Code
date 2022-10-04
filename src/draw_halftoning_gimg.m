@@ -1,31 +1,41 @@
-function draw_halftoning_img_44(imgp, fn, imgsp, showimg)
+function draw_halftoning_gimg(imgp, fn, dm, imgsp, showimg)
     % ========================
     % This function takes grayscale image as input, plot and export
     %    the halftoning image with 2x2 dither matrix.
     % ======Variable==========
     % imgp: image path
     % fn: file name
+    % dm: dimension of dither matrix
     % imgsp: image save path
     % showimg: show image or not
     d22 = [0 128; 192 64]; %: 2x2 dither matrix
-    d44 = [d22 d22+32; d22+48 d22+16]; %: 4x4 dither matrix
-    [dh, dw] = size(d44); %: dither matrix size
     % ======DefaultValue======
-    if nargin < 4
+    if nargin < 5
         imgp = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\luna_grayscale.jpg';
-        fn = 'luna_grayscale_hg44_.jpg';
+        fn = 'luna_grayscale_hg_.jpg';
+        dm = 5; % can cause error if the number is too big
         imgsp = strcat('D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\', fn);
         showimg = 1;
     end
     % ======Function==========
-    function img = hg(img, d44, dh, dw, ih, iw)
-        hl = ceil(ih / dh)-1;
-        wl = ceil(iw / dw)-1;
+    function img = thg(img, dnn, dh, dw, ih, iw)
+        hl = ceil(ih / dh);
+        if mod(ih, dh) ~= 0
+            hl = hl - 1;
+        end
+        wl = ceil(iw / dw);
+        if mod(iw, dw) ~= 0
+            wl = wl - 1;
+        end
         hr = ih - hl * dh;
         wr = iw - wl * dw;
-        dbuf = repmat(d44, hl, wl);
-        dbuf = [dbuf, repmat(d44(:,wr), hl, wr)]; %horizontal
-        dbuf = [dbuf; [repmat(d44(hr,:), hr, wl), d44(1:hr,wr)]]; %vertical
+        dbuf = repmat(dnn, hl, wl);
+        if wr ~= 0
+            dbuf = [dbuf, repmat(dnn(:,wr), hl, wr)]; %horizontal
+        end
+        if hr ~= 0
+            dbuf = [dbuf; [repmat(dnn(hr,:), hr, wl), dnn(1:hr,wr)]]; %vertical
+        end
         img = (img > dbuf) * 255;
     end
     % ======Main==============
@@ -37,10 +47,20 @@ function draw_halftoning_img_44(imgp, fn, imgsp, showimg)
     end
     img = double(img); % affect writing image
     t0 = clock();
+    [ih, iw] = size(img);
+    if ih > (dm * 2) && iw > (dm * 2)
+        dnn = d22;
+        for i = 1:dm-1
+            dnn = [dnn dnn+32; dnn+48 dnn+16];
+        end
+    else
+        disp('Select a smaller dither matrix');
+        return
+    end
+    [dh, dw] = size(dnn); %: dither matrix size
 
     % halftoning
-    [ih, iw] = size(img);
-    img = hg(img, d44, dh, dw, ih, iw);
+    img = thg(img, dnn, dh, dw, ih, iw);
 
     % show image
     elapsed_time = etime (clock (), t0)

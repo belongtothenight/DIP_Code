@@ -1,4 +1,4 @@
-function draw_halftoning_img_22(imgp, fn, imgsp, md, showimg)
+function draw_halftoning_img_g22(imgp, fn, imgsp, md, showimg)
     % ========================
     % This function takes grayscale image as input, plot and export
     %    the halftoning image with 2x2 dither matrix.
