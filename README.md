@@ -14,3 +14,4 @@ Scripts in this repo needs to be executed with MATLAB. Adjustment is needed for 
 | :-: | ---------------- | ------------------------------------------------------------------------------------------ |
 |  1  | draw3pic.m       | Draw three identical square except for their gray-scale pixel value. Illustrates illution. |
 |  2  | draw_mach_band.m | Draw Mach Bands.                                                                           |
+|  3  | hg22.m           | Draw halftoning image from grayscale image by 2x2 dither matrix                            |

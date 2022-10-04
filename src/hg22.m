@@ -1,18 +1,22 @@
-function hg22(imgp, fn, imgsp, md)
+function hg22(imgp, fn, imgsp, md, showimg)
     % ========================
     % This function takes grayscale image as input, plot and export
     %    the halftoning image with 2x2 dither matrix.
     % ======Variable==========
     % imgp: image path
+    % fn: file name
     % imgsp: image save path
+    % md: mode
+    % showimg: show image or not
     d22 = [0 128; 192 64]; %: 2x2 dither matrix
     [dh, dw] = size(d22); %: dither matrix size
     % ======DefaultValue======
-    if nargin < 4
+    if nargin < 5
         imgp = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\luna_grayscale.jpg';
         fn = 'luna_grayscale_hg22_.jpg';
         imgsp = strcat('D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\', fn);
-        md = 2;
+        md = 4;
+        showimg = 1;
     end
     % ======Function==========
     function img = md1(imgp, d22, dh, dw, ih, iw);
@@ -190,6 +194,8 @@ function hg22(imgp, fn, imgsp, md)
     % show image
     elapsed_time = etime (clock (), t0)
     img = mat2gray(img, [0 255]);
-    % imshow(img);
+    if showimg == 1
+        imshow(img);
+    end
     imwrite(img, imgsp);
 end
