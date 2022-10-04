@@ -16,7 +16,7 @@ function draw_halftoning_cimg(imgp, fn, dm, imgsp, showimg)
     if nargin < 5
         imgp = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\luna_colored.jpg';
         fn = 'luna_colored_hg_.jpg';
-        dm = 4; % can cause error if the number is too big
+        dm = 2; % can cause error if the number is too big
         imgsp = strcat('D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\', fn);
         showimg = 1;
     end
