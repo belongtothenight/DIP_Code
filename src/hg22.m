@@ -16,7 +16,7 @@ function hg22(imgp, fn, imgsp, md, showimg)
         fn = 'luna_grayscale_hg22_.jpg';
         imgsp = strcat('D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\', fn);
         md = 4;
-        showimg = 1;
+        showimg = 0;
     end
     % ======Function==========
     function img = md1(imgp, d22, dh, dw, ih, iw);
@@ -158,8 +158,8 @@ function hg22(imgp, fn, imgsp, md, showimg)
         % pic: 4 (border unprocessed)
         % t: 0.00099945s (border processed)
         % pic: 5 (border processed)
-        hl = round(ih / dh)-1;
-        wl = round(iw / dw)-1;
+        hl = ceil(ih / dh)-1;
+        wl = ceil(iw / dw)-1;
         hr = ih - hl * dh;
         wr = iw - wl * dw;
         dbuf = repmat(d22, hl, wl);
@@ -172,13 +172,11 @@ function hg22(imgp, fn, imgsp, md, showimg)
     % ======Main==============
     % load image
     img = imread(imgp);
-    img = double(img);
+    img = double(img); % affect writing image
     t0 = clock();
 
     % halftoning
     [ih, iw] = size(img);
-    hl = round(ih / dh);
-    wl = round(iw / dw);
     if md == 1
         img = md1(img, d22, dh, dw, ih, iw);
     elseif md == 2
