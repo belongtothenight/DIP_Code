@@ -1,4 +1,4 @@
-function gimg_arith_op_2(imgsrc, imgdst, speedtest, show, export)
+function cimg_arith_op_2(imgsrc, imgdst, speedtest, show, export)
     % ========================
     % This function takes grayscale image as input, plot and export
     %    the solarized image.
@@ -11,8 +11,8 @@ function gimg_arith_op_2(imgsrc, imgdst, speedtest, show, export)
     runs = 1e05;
     % ======DefaultValue======
     if nargin < 5
-        imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_g_225.jpg';
-        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\img_arith_op_2\luna_ao2.jpg';
+        imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_c_225.jpeg';
+        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\img_arith_op_2\lena_ao2.jpg';
         speedtest = 1;
         show = 0;
         export = 0;
@@ -36,17 +36,21 @@ function gimg_arith_op_2(imgsrc, imgdst, speedtest, show, export)
     % ======Main==============
     % load image
     img = imread(imgsrc);
-    try
-        % necessary if using Matlab
-        img = rgb2gray(img);
-    end
-    img = double(img); % affect writing image
+    [x,y,z] = size(img);
+    img = double(img);
 
     % halftoning
     if speedtest == 1
         tic
         for i = 1:runs
-            img1 = ao1(img);
+            rimg = reshape(img(:,:,1), [x,y]);
+            gimg = reshape(img(:,:,2), [x,y]);
+            bimg = reshape(img(:,:,3), [x,y]);
+            rimg = ao1(rimg);
+            gimg = ao1(gimg);
+            bimg = ao1(bimg);
+            img1 = cat(3, rimg, gimg, bimg);
+            img1 = mat2gray(img1, [0 255]);
         end
         elapsed_time1 = toc;
         avget1 = elapsed_time1/runs;
@@ -62,10 +66,24 @@ function gimg_arith_op_2(imgsrc, imgdst, speedtest, show, export)
         fprintf('Speed up on average %f seconds, %f times, %f %% of original time.\n', avget1-avget2, avget1/avget2, (avget1-avget2)/avget1*100);
     else
         tic;
-        img1 = ao1(img);
+        rimg = reshape(img(:,:,1), [x,y]);
+        gimg = reshape(img(:,:,2), [x,y]);
+        bimg = reshape(img(:,:,3), [x,y]);
+        rimg = ao1(rimg);
+        gimg = ao1(gimg);
+        bimg = ao1(bimg);
+        img1 = cat(3, rimg, gimg, bimg);
+        img1 = mat2gray(img1, [0 255]);
         elapsed_time1 = toc;
         tic;
-        img2 = ao2(img);
+        rimg = reshape(img(:,:,1), [x,y]);
+        gimg = reshape(img(:,:,2), [x,y]);
+        bimg = reshape(img(:,:,3), [x,y]);
+        rimg = ao2(rimg);
+        gimg = ao2(gimg);
+        bimg = ao2(bimg);
+        img2 = cat(3, rimg, gimg, bimg);
+        img2 = mat2gray(img2, [0 255]);
         elapsed_time2 = toc;
         fprintf('\nElapsed time (1/2): %f/%f\n', elapsed_time1, elapsed_time2);
         if img1 == img2
@@ -76,21 +94,19 @@ function gimg_arith_op_2(imgsrc, imgdst, speedtest, show, export)
     end
 
     % show & export image
-    img1 = mat2gray(img1, [0 255]);
-    img2 = mat2gray(img2, [0 255]);
     if show == 1
         figure('visible','on');
         montage({imgsrc, img1, img2}, 'ThumbnailSize', [], 'size', [1 3]);
         title('Arithmetic Operation 1: original / modified1 / modified2');
     end
     if export == 1
-        imwrite(img, imgdst);
+        imwrite(img1, imgdst);
     end
     fprintf('\n');
 end
 
 % ======SpeedTestResult====
 % Total runs: 100000 times.
-% Total elapsed time: 21.005860 / 2.360536 seconds.
-% Averaged elapsed time: 0.000210 / 0.000024 seconds.
-% Speed up on average 0.000186 seconds, 8.898766 times, 88.762487 % of original time.
+% Total elapsed time: 204.140723 / 45.520765 seconds.
+% Averaged elapsed time: 0.002041 / 0.000455 seconds.
+% Speed up on average 0.001586 seconds, 4.484563 times, 77.701282 % of original time.
