@@ -24,3 +24,5 @@ Scripts in this repo needs to be executed with MATLAB. Adjustment is needed for 
 | 10  | [gimg_ao2_value.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/gimg_ao2_value.m)                   | Draw figure showing value before and after conversion.                                     |
 | 11  | [cimg_arith_op_1.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/cimg_arith_op_1.m)                 | Solarize colored image with speed test capability.                                         |
 | 12  | [cimg_arith_op_2.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/cimg_arith_op_2.m)                 | Solarize colored image with speed test capability.                                         |
+| 13  | [gimg_hist_equal.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/gimg_hist_equal.m)                 | Gray-scale image histogram equalizor.                                                      |
+| 14  | [hist_equal.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/hist_equal.m)                           | Histogram equalizor.                                                                       |
