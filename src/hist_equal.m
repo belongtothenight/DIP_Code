@@ -13,8 +13,8 @@ function img1 = hist_equal(imgsrc, imgdst, speedtest, show, export)
     if nargin < 5
         imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_c_225.jpeg';
         imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\img_hist_equal\lena_c_255_he_.jpg';
-        speedtest = 1;
-        show = 0;
+        speedtest = 0;
+        show = 1;
         export = 0;
     end
     histdst1 = imgdst(1:end-5) + "_hist_origin.jpg";
@@ -185,7 +185,7 @@ function img1 = hist_equal(imgsrc, imgdst, speedtest, show, export)
             bar(gimg, 'g');
             bar(bimg, 'b');
             hold off
-            saveas(gcf, histdst1)
+            saveas(gcf, histdst1);
             % histogram 1
             clf
             imwrite(img1, histdst2);
@@ -198,7 +198,7 @@ function img1 = hist_equal(imgsrc, imgdst, speedtest, show, export)
             bar(gimg, 'g');
             bar(bimg, 'b');
             hold off
-            saveas(gcf, histdst2)
+            saveas(gcf, histdst2);
             % histogram 2
             clf
             imwrite(img2, histdst3);
@@ -211,7 +211,7 @@ function img1 = hist_equal(imgsrc, imgdst, speedtest, show, export)
             bar(gimg, 'g');
             bar(bimg, 'b');
             hold off
-            saveas(gcf, histdst3)
+            saveas(gcf, histdst3);
             % show image
             close all force
             figure('visible','on');
