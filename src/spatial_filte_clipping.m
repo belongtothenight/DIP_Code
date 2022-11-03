@@ -5,14 +5,15 @@ function img1 = spatial_filter(imgsrc, imgdst, show, export)
     % ======Variable==========
     % imgsrc:     image source path
     % imgdst:     image destination path
-    % show:       1 for showing the image, 0 for not showing
     % export:     1 for exporting the image, 0 for not exporting
+    clip_max = 6; % exponential value for clipping
+    clip_min = 0; % exponential value for clipping
+    clip_int = 0.5 % interval exponential value for clipping
     % ======DefaultValue======
     if nargin < 4
-        imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_g_225.jpg';
-        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter\lena_g_255_';
-        show = 1;
-        export = 0;
+        imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_c_225.jpg';
+        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter_clipping\lena_c_255_';
+        export = 1;
     end
     % ======Function==========
     function img = fun1(img, mask_size)
@@ -91,26 +92,22 @@ function img1 = spatial_filter(imgsrc, imgdst, show, export)
         end
     end
     function img = fun5(img, scaling_size)
-        mask1 = [0 -1 0; -1 4 -1; 0 -1 0];
-        % mask2 = [0 0 0; 0 1 0; 0 0 0]
-        % mask = [0 -1 0; -1 5 -1; 0 -1 0];
+        mask = [0 -1 0; -1 5 -1; 0 -1 0];
         [h, w] = size(img);
         img_temp = img;
         % masking - edge detection
         for i = 2:h-1
             for j = 2:w-1
-                img_temp(i, j) = sum(sum(img(i-1:i+1, j-1:j+1) .* mask1));
+                img_temp(i, j) = sum(sum(img(i-1:i+1, j-1:j+1) .* mask));
             end
         end
         % scaling transform (positive)
         if scaling_size ~= 0
             gh = max(max(img_temp)) * scaling_size;
             gl = 0;
-            img_temp = (img_temp - gl) / (gh - gl) * 255;
-            img = img + img_temp;
+            img = (img_temp - gl) / (gh - gl) * 255;
         elseif scaling_size == -1
-            img_temp = abs(img_temp);
-            img = img + img_temp;
+            img = abs(img_temp);
         else
             img = img_temp;
         end
@@ -193,31 +190,25 @@ function img1 = spatial_filter(imgsrc, imgdst, show, export)
     img = double(img); % affect writing image
     [x, y, z] = size(img);
     
-    % simple execution
-    img1 = execute(img, 1, 3);
-    img2 = execute(img, 2, 0);
-    img3 = execute(img, 3, 0);
-    img4 = execute(img, 4, 0);
-    img5 = execute(img, 5, 0);
-    img6 = execute(img, 6, [0 1000]);
-    img7 = execute(img, 7, [0 1000]);
-    
-    % show image
-    if show == 1
-        montage({imgsrc, img1, img2, img3, img4, img5, img6, img7}, 'size', [2 4]);
-        title('Histogram Equalization: original / blur / edge detection | edge enhancement / edge detection / edge enhancement');
+    % load runtimes
+    times = ((clip_max-clip_min) / clip_int);
+    run = [0];
+    for i=2:times+1
+        run = [run, exp(clip_min + clip_int*(i-1))];
+    end
+    run = run([2:end])
+
+    % edge detection + edge enhancement variable adjustment
+    for i=1:times
+        num = [0 run(i)]
+        img2 = execute(img, 6, num);
+        img3 = execute(img, 7, num);
+        if export == 1
+            imwrite(img2, strcat(imgdst,'ed_', num2str(num(2)), '.jpg'));
+            imwrite(img3, strcat(imgdst,'ee_', num2str(num(2)), '.jpg'));
+        end
     end
 
-    % export image
-    if export == 1
-        imwrite(img1, strcat(imgdst,'bl_.jpg'));
-        imwrite(img2, strcat(imgdst,'ed_.jpg'));
-        imwrite(img3, strcat(imgdst,'ee_.jpg'));
-        imwrite(img4, strcat(imgdst,'ed1_.jpg'));
-        imwrite(img5, strcat(imgdst,'ee1_.jpg'));
-        imwrite(img6, strcat(imgdst,'ed2_.jpg'));
-        imwrite(img7, strcat(imgdst,'ee2_.jpg'));
-    end
     fprintf('finished executing\n\n');
 end
 

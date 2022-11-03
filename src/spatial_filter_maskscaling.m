@@ -5,15 +5,13 @@ function img1 = spatial_filter_maskscaling(imgsrc, imgdst, show, export)
     % ======Variable==========
     % imgsrc:     image source path
     % imgdst:     image destination path
-    % show:       1 for showing the image, 0 for not showing
     % export:     1 for exporting the image, 0 for not exporting
     interval = 2; % interval for value of scaling_size (fixed to odd numbers)
     max_step = 10; % max step for value of scaling_size
     % ======DefaultValue======
-    if nargin < 4
+    if nargin < 3
         imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_g_225.jpg';
-        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter_maskscaling\lena_g_255_';
-        show = 0;
+        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter_maskscaling\lena_g_225_';
         export = 1;
     end
     % ======Function==========
@@ -108,12 +106,6 @@ function img1 = spatial_filter_maskscaling(imgsrc, imgdst, show, export)
         if export == 1
             imwrite(img1, strcat(imgdst,'bl_', num2str(num), '.jpg'));
         end
-    end
-    
-    % show image
-    if show == 1
-        montage({imgsrc, img1, img2, img3}, 'size', [1 4]);
-        title('Histogram Equalization: original / blur / edge detection / edge enhancement');
     end
 
     fprintf('finished executing\n\n');
