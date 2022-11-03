@@ -8,11 +8,11 @@ function img1 = spatial_filter(imgsrc, imgdst, show, export)
     % export:     1 for exporting the image, 0 for not exporting
     clip_max = 6; % exponential value for clipping
     clip_min = 0; % exponential value for clipping
-    clip_int = 0.5 % interval exponential value for clipping
+    clip_int = 0.5; % interval exponential value for clipping
     % ======DefaultValue======
-    if nargin < 4
-        imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_c_225.jpg';
-        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter_clipping\lena_c_225_';
+    if nargin < 3
+        imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_g_225.jpg';
+        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter_clipping\lena_g_225_';
         export = 1;
     end
     % ======Function==========
@@ -193,19 +193,23 @@ function img1 = spatial_filter(imgsrc, imgdst, show, export)
     % load runtimes
     times = ((clip_max-clip_min) / clip_int);
     run = [0];
+    runs = [0];
     for i=2:times+1
         run = [run, exp(clip_min + clip_int*(i-1))];
+        runs = [runs, i];
     end
-    run = run([2:end])
+    run = run([2:end]);
+    runs = runs([2:end])-1;
 
     % edge detection + edge enhancement variable adjustment
     for i=1:times
-        num = [0 run(i)]
+        num = [0 run(i)];
+        nums = runs(i);
         img2 = execute(img, 6, num);
         img3 = execute(img, 7, num);
         if export == 1
-            imwrite(img2, strcat(imgdst,'ed_', num2str(num(2)), '.jpg'));
-            imwrite(img3, strcat(imgdst,'ee_', num2str(num(2)), '.jpg'));
+            imwrite(img2, strcat(imgdst,'ed_', num2str(nums), '.jpg'));
+            imwrite(img3, strcat(imgdst,'ee_', num2str(nums), '.jpg'));
         end
     end
 
