@@ -10,7 +10,7 @@ function img1 = spatial_filter(imgsrc, imgdst, show, export)
     % ======DefaultValue======
     if nargin < 4
         imgsrc = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\lena_g_225.jpg';
-        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter\lena_g_255_';
+        imgdst = 'D:\Note_Database\Subject\DIP Digital Image Processing\DIP_Code\pic\spatial_filter\lena_g_225_';
         show = 1;
         export = 0;
     end
