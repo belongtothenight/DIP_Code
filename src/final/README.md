@@ -44,6 +44,7 @@ For the modified files are going to be noted in the following structure section.
 
 ## Structure
 
+[PyTorch Implementation Code Structure](assets/f16_src_structure.html)
 
 ## Steps
 

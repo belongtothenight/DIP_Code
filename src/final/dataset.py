@@ -43,8 +43,10 @@ class TrainValidImageDataset(Dataset):
     def __init__(self, image_dir: str, image_size: int, mode: str) -> None:
         super(TrainValidImageDataset, self).__init__()
         # Get all image file names in folder
-        self.lr_image_file_names = [os.path.join(image_dir, "lr", image_file_name) for image_file_name in os.listdir(os.path.join(image_dir, "lr"))]
-        self.hr_image_file_names = [os.path.join(image_dir, "hr", image_file_name) for image_file_name in os.listdir(os.path.join(image_dir, "hr"))]
+        self.lr_image_file_names = [os.path.join(
+            image_dir, "lr", image_file_name) for image_file_name in os.listdir(os.path.join(image_dir, "lr"))]
+        self.hr_image_file_names = [os.path.join(
+            image_dir, "hr", image_file_name) for image_file_name in os.listdir(os.path.join(image_dir, "hr"))]
         # Specify the high-resolution image size, with equal length and width
         self.image_size = image_size
         # Load training dataset or test dataset
@@ -64,19 +66,27 @@ class TrainValidImageDataset(Dataset):
 
         if self.mode == "Train":
             # Data augment
-            lr_y_image, hr_y_image = imgproc.random_crop(lr_y_image, hr_y_image, self.image_size)
-            lr_y_image, hr_y_image = imgproc.random_rotate(lr_y_image, hr_y_image, angles=[0, 90, 180, 270])
-            lr_y_image, hr_y_image = imgproc.random_horizontally_flip(lr_y_image, hr_y_image, p=0.5)
-            lr_y_image, hr_y_image = imgproc.random_vertically_flip(lr_y_image, hr_y_image, p=0.5)
+            lr_y_image, hr_y_image = imgproc.random_crop(
+                lr_y_image, hr_y_image, self.image_size)
+            lr_y_image, hr_y_image = imgproc.random_rotate(
+                lr_y_image, hr_y_image, angles=[0, 90, 180, 270])
+            lr_y_image, hr_y_image = imgproc.random_horizontally_flip(
+                lr_y_image, hr_y_image, p=0.5)
+            lr_y_image, hr_y_image = imgproc.random_vertically_flip(
+                lr_y_image, hr_y_image, p=0.5)
         elif self.mode == "Valid":
-            lr_y_image, hr_y_image = imgproc.center_crop(lr_y_image, hr_y_image, self.image_size)
+            lr_y_image, hr_y_image = imgproc.center_crop(
+                lr_y_image, hr_y_image, self.image_size)
         else:
-            raise ValueError("Unsupported data processing model, please use `Train` or `Valid`.")
+            raise ValueError(
+                "Unsupported data processing model, please use `Train` or `Valid`.")
 
         # Convert image data into Tensor stream format (PyTorch).
         # Note: The range of input and output is between [0, 1]
-        lr_y_tensor = imgproc.image2tensor(lr_y_image, range_norm=False, half=False)
-        hr_y_tensor = imgproc.image2tensor(hr_y_image, range_norm=False, half=False)
+        lr_y_tensor = imgproc.image2tensor(
+            lr_y_image, range_norm=False, half=False)
+        hr_y_tensor = imgproc.image2tensor(
+            hr_y_image, range_norm=False, half=False)
 
         return {"lr": lr_y_tensor, "hr": hr_y_tensor}
 
@@ -93,7 +103,8 @@ class TrainValidImageDataset(Dataset):
             # Disabling garbage collection after for loop helps speed things up
             gc.disable()
 
-            lr_image = cv2.imread(lr_image_file_name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+            lr_image = cv2.imread(
+                lr_image_file_name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
             # Only extract the image data of the Y channel
             lr_y_image = imgproc.bgr2ycbcr(lr_image, use_y_channel=True)
             self.lr_datasets.append(lr_y_image)
@@ -110,7 +121,8 @@ class TrainValidImageDataset(Dataset):
             # Disabling garbage collection after for loop helps speed things up
             gc.disable()
 
-            hr_image = cv2.imread(hr_image_file_name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+            hr_image = cv2.imread(
+                hr_image_file_name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
             # Only extract the image data of the Y channel
             hr_y_image = imgproc.bgr2ycbcr(hr_image, use_y_channel=True)
             self.hr_datasets.append(hr_y_image)
@@ -130,7 +142,8 @@ class TestImageDataset(Dataset):
     def __init__(self, test_image_dir: str, upscale_factor: int) -> None:
         super(TestImageDataset, self).__init__()
         # Get all image file names in folder
-        self.image_file_names = [os.path.join(test_image_dir, x) for x in os.listdir(test_image_dir)]
+        self.image_file_names = [os.path.join(
+            test_image_dir, x) for x in os.listdir(test_image_dir)]
         # How many times the high-resolution image is the low-resolution image
         self.upscale_factor = upscale_factor
 
@@ -162,7 +175,8 @@ class TestImageDataset(Dataset):
             gc.disable()
 
             # Read a batch of image data
-            hr_image = cv2.imread(image_file_name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
+            hr_image = cv2.imread(
+                image_file_name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255.
 
             # Use high-resolution image to make low-resolution image
             lr_image = imgproc.imresize(hr_image, 1 / self.upscale_factor)
@@ -174,8 +188,10 @@ class TestImageDataset(Dataset):
 
             # Convert image data into Tensor stream format (PyTorch).
             # Note: The range of input and output is between [0, 1]
-            lr_y_tensor = imgproc.image2tensor(lr_y_image, range_norm=False, half=False)
-            hr_y_tensor = imgproc.image2tensor(hr_y_image, range_norm=False, half=False)
+            lr_y_tensor = imgproc.image2tensor(
+                lr_y_image, range_norm=False, half=False)
+            hr_y_tensor = imgproc.image2tensor(
+                hr_y_image, range_norm=False, half=False)
 
             self.lr_datasets.append(lr_y_tensor)
             self.hr_datasets.append(hr_y_tensor)
@@ -281,7 +297,8 @@ class CUDAPrefetcher:
         with torch.cuda.stream(self.stream):
             for k, v in self.batch_data.items():
                 if torch.is_tensor(v):
-                    self.batch_data[k] = self.batch_data[k].to(self.device, non_blocking=True)
+                    self.batch_data[k] = self.batch_data[k].to(
+                        self.device, non_blocking=True)
 
     def next(self):
         torch.cuda.current_stream().wait_stream(self.stream)
