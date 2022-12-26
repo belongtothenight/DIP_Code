@@ -75,7 +75,8 @@ def tensor2image(tensor: torch.Tensor, range_norm: bool, half: bool) -> Any:
     if half:
         tensor = tensor.half()
 
-    image = tensor.squeeze_(0).permute(1, 2, 0).mul_(255).clamp_(0, 255).cpu().numpy().astype("uint8")
+    image = tensor.squeeze_(0).permute(1, 2, 0).mul_(
+        255).clamp_(0, 255).cpu().numpy().astype("uint8")
 
     return image
 
@@ -197,12 +198,15 @@ def imresize(image: Any, scale_factor: float, antialiasing: bool = True) -> Any:
             squeeze_flag = True
 
     in_c, in_h, in_w = image.size()
-    out_h, out_w = math.ceil(in_h * scale_factor), math.ceil(in_w * scale_factor)
+    out_h, out_w = math.ceil(
+        in_h * scale_factor), math.ceil(in_w * scale_factor)
     kernel_width = 4
 
     # get weights and indices
-    weights_h, indices_h, sym_len_hs, sym_len_he = calculate_weights_indices(in_h, out_h, scale_factor, kernel_width, antialiasing)
-    weights_w, indices_w, sym_len_ws, sym_len_we = calculate_weights_indices(in_w, out_w, scale_factor, kernel_width, antialiasing)
+    weights_h, indices_h, sym_len_hs, sym_len_he = calculate_weights_indices(
+        in_h, out_h, scale_factor, kernel_width, antialiasing)
+    weights_w, indices_w, sym_len_ws, sym_len_we = calculate_weights_indices(
+        in_w, out_w, scale_factor, kernel_width, antialiasing)
     # process H dimension
     # symmetric copying
     img_aug = torch.FloatTensor(in_c, in_h + sym_len_hs + sym_len_he, in_w)
@@ -223,7 +227,8 @@ def imresize(image: Any, scale_factor: float, antialiasing: bool = True) -> Any:
     for i in range(out_h):
         idx = int(indices_h[i][0])
         for j in range(in_c):
-            out_1[j, i, :] = img_aug[j, idx:idx + kernel_width, :].transpose(0, 1).mv(weights_h[i])
+            out_1[j, i, :] = img_aug[j, idx:idx + kernel_width,
+                                     :].transpose(0, 1).mv(weights_h[i])
 
     # process W dimension
     # symmetric copying
@@ -245,7 +250,8 @@ def imresize(image: Any, scale_factor: float, antialiasing: bool = True) -> Any:
     for i in range(out_w):
         idx = int(indices_w[i][0])
         for j in range(in_c):
-            out_2[j, :, i] = out_1_aug[j, :, idx:idx + kernel_width].mv(weights_w[i])
+            out_2[j, :, i] = out_1_aug[j, :, idx:idx +
+                                       kernel_width].mv(weights_w[i])
 
     if squeeze_flag:
         out_2 = out_2.squeeze(0)
@@ -272,7 +278,8 @@ def rgb2ycbcr(image: np.ndarray, use_y_channel: bool = False) -> np.ndarray:
     if use_y_channel:
         image = np.dot(image, [65.481, 128.553, 24.966]) + 16.0
     else:
-        image = np.matmul(image, [[65.481, -37.797, 112.0], [128.553, -74.203, -93.786], [24.966, 112.0, -18.214]]) + [16, 128, 128]
+        image = np.matmul(image, [[65.481, -37.797, 112.0], [128.553, -
+                          74.203, -93.786], [24.966, 112.0, -18.214]]) + [16, 128, 128]
 
     image /= 255.
     image = image.astype(np.float32)
@@ -295,7 +302,8 @@ def bgr2ycbcr(image: np.ndarray, use_y_channel: bool = False) -> np.ndarray:
     if use_y_channel:
         image = np.dot(image, [24.966, 128.553, 65.481]) + 16.0
     else:
-        image = np.matmul(image, [[24.966, 112.0, -18.214], [128.553, -74.203, -93.786], [65.481, -37.797, 112.0]]) + [16, 128, 128]
+        image = np.matmul(image, [[24.966, 112.0, -18.214], [128.553, -
+                          74.203, -93.786], [65.481, -37.797, 112.0]]) + [16, 128, 128]
 
     image /= 255.
     image = image.astype(np.float32)
@@ -370,8 +378,10 @@ def center_crop(lr_image: np.ndarray, hr_image: np.ndarray, image_size: int) -> 
     left = (image_width - image_size) // 2
 
     # Crop image patch
-    patch_lr_image = lr_image[top:top + image_size, left:left + image_size, ...]
-    patch_hr_image = hr_image[top:top + image_size, left:left + image_size, ...]
+    patch_lr_image = lr_image[top:top +
+                              image_size, left:left + image_size, ...]
+    patch_hr_image = hr_image[top:top +
+                              image_size, left:left + image_size, ...]
 
     return patch_lr_image, patch_hr_image
 
@@ -395,8 +405,10 @@ def random_crop(lr_image: np.ndarray, hr_image: np.ndarray, image_size: int) -> 
     left = random.randint(0, image_width - image_size)
 
     # Crop image patch
-    patch_lr_image = lr_image[top:top + image_size, left:left + image_size, ...]
-    patch_hr_image = hr_image[top:top + image_size, left:left + image_size, ...]
+    patch_lr_image = lr_image[top:top +
+                              image_size, left:left + image_size, ...]
+    patch_hr_image = hr_image[top:top +
+                              image_size, left:left + image_size, ...]
 
     return patch_lr_image, patch_hr_image
 
@@ -423,8 +435,10 @@ def random_rotate(lr_image: np.ndarray, hr_image: np.ndarray, angles: list, cent
     # Random select specific angle
     angle = random.choice(angles)
     matrix = cv2.getRotationMatrix2D(center, angle, scale_factor)
-    rotated_lr_image = cv2.warpAffine(lr_image, matrix, (image_width, image_height))
-    rotated_hr_image = cv2.warpAffine(hr_image, matrix, (image_width, image_height))
+    rotated_lr_image = cv2.warpAffine(
+        lr_image, matrix, (image_width, image_height))
+    rotated_hr_image = cv2.warpAffine(
+        hr_image, matrix, (image_width, image_height))
 
     return rotated_lr_image, rotated_hr_image
 
