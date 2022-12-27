@@ -45,9 +45,3 @@ For the modified files are going to be noted in the following structure section.
 ## Structure
 
 [PyTorch Implementation Code Structure](assets/f16_src_structure.html)
-
-## Steps
-
-1. Create program structure diagram.
-2. Use different images for validation.
-3. Write a new SR function (only take one LR image as input).
