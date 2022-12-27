@@ -31,7 +31,15 @@ upscale_factor = 2
 # Current configuration parameter method
 mode = "valid"
 # Experiment name, easy to save weights and log files
-exp_name = "vdsr_baseline"
+exp_name = "MC9/108x108"
+exp_name = "MC9/120x120"
+exp_name = "MC9/135x135"
+exp_name = "MC9/180x180"
+exp_name = "MC9/216x216"
+exp_name = "MC9/270x270"
+exp_name = "MC9/360x360"
+exp_name = "MC9/540x540"
+exp_name = "MC9/1080x1080"
 
 if mode == "train":
     # Dataset
@@ -68,6 +76,6 @@ if mode == "train":
 if mode == "valid":
     # Test data address
     sr_dir = f"results/test/{exp_name}"
-    hr_dir = f"data/Set5/GTmod12"
+    hr_dir = f"data/{exp_name}"
 
-    model_path = f"results/{exp_name}/best.pth.tar"
+    model_path = f"results/vdsr-TB291-fef487db.pth.tar"

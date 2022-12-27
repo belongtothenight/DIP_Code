@@ -48,8 +48,6 @@ For the modified files are going to be noted in the following structure section.
 
 ## Steps
 
-1. Create program structure diagram
-2. Test image generation speed
-3. Use different images for validation
-4. Try to train model with Minecraft Image
-5. Validate training result
+1. Create program structure diagram.
+2. Use different images for validation.
+3. Write a new SR function (only take one LR image as input).
