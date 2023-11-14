@@ -12,7 +12,7 @@ Scripts in this repo needs to be executed with MATLAB. Adjustment is needed for 
 
 | No. | Filename                                                                                                                            | Description                                                                                    |
 | :-: | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-|  1  | [draw3pic.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw3pic.m)                                                 | Draw three identical square except for their gray-scale pixel value. Illustrates illution.     |
+|  1  | [draw3pic.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw3pic.m)                                                 | Draw three identical square except for their gray-scale pixel value. Illustrates illusion.     |
 |  2  | [draw_mach_band.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_mach_band.m)                                     | Draw Mach Bands.                                                                               |
 |  3  | [draw_halftoning_gimg_22.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_halftoning_gimg_22.m)                   | Draw halftoning image from grayscale image by 2x2 dither matrix.                               |
 |  4  | [draw_halftoning_gimg_44.m](https://github.com/belongtothenight/DIP_Code/blob/main/src/draw_halftoning_gimg_44.m)                   | Draw halftoning image from grayscale image by 4x4 dither matrix.                               |
